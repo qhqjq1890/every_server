@@ -2,10 +2,15 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const postSchema = new Schema({
+  boardId: {
+    type: Schema.Types.ObjectId,
+    ref: "Board",
+  },
   title: String,
-  author: String,
+  authorId: String,
   body: String,
-  comments: [{ body: String, date: Date }],
+  comments: [{ comment_id: String, body: String, date: Date }],
+  date: Date,
   votes: Number,
 });
 
