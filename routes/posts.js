@@ -5,15 +5,17 @@ import { Board } from "../models/index.js";
 const Postsrouter = Router();
 
 Postsrouter.get("/", async (req, res) => {
-  const post = await Post.findOne({ author: "qhqjq1890" });
+  const board = await Board.findOne({ boardName: req.body.boardName });
+
+  const post = await Post.findOne({ boardId: board._id });
   res.json({ post });
 });
 
 Postsrouter.post("/", async (req, res) => {
-  const fuck = await Board.findOne({ boardName: req.body.boardName });
+  const board = await Board.findOne({ boardName: req.body.boardName });
 
   Post.create({
-    boardId: fuck._id,
+    boardId: board._id,
     title: req.body.title,
     authorId: req.body.authorId,
     body: req.body.body,
