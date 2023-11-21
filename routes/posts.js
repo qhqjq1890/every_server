@@ -4,11 +4,25 @@ import { Board } from "../models/index.js";
 
 const Postsrouter = Router();
 
-Postsrouter.get("/", async (req, res) => {
-  const board = await Board.findOne({ boardName: req.body.boardName });
+Postsrouter.get("/:boardName", async (req, res) => {
+  let { boardName } = req.params;
+  try {
+    const board = await Board.findOne({ boardName: boardName });
+    const post = await Post.find({ boardId: board._id }).sort({ date: "desc" });
+    res.json({ post });
+  } catch (error) {
+    console.log(error);
+  }
+});
 
-  const post = await Post.findOne({ boardId: board._id });
-  res.json({ post });
+Postsrouter.get("/:boardName/:_id", async (req, res) => {
+  let { boardName, _id } = req.params;
+  try {
+    const post = await Post.findOne({ _id: _id });
+    res.json({ post });
+  } catch (error) {
+    console.log(error);
+  }
 });
 
 Postsrouter.post("/", async (req, res) => {

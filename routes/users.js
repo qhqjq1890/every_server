@@ -20,6 +20,7 @@ UserRouter.post("/login", async (req, res) => {
     .then((id) => {
       if (req.body.password == id.password) {
         res.send({ server_message: "login success" });
+        console.log(`user ${req.body.userId} logined`);
       } else {
         res.send({ server_message: "비밀번호가 틀렸습니다." });
       }
